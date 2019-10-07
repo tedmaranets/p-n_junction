@@ -19,7 +19,7 @@ def make_pnd(name): # creates an object with necessary properties for calculatio
     if name == "AlGaAs":
         pnd = PNDS(name, 1 * 10 ** 18, 5 * 10 ** 14, 34.43134, 10.628, 38)
     elif name == "4H-SiC":
-        pnd = PNDS(name, 2.8 * 10 ** 15 , 3 * 10 ** 19, 5 * 10 ** (-9) , 9.66, 50)
+        pnd = PNDS(name, 2.8 * 10 ** 15 , 3 * 10 ** 19, 5 * 10 ** (-9) , 9.66, 145)
     else:
         pnd = PNDS("null",0,0,0,0,0)
     return pnd

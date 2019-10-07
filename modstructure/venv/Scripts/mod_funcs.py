@@ -3,8 +3,9 @@ import matplotlib.pyplot as plt
 import pygame
 import time
 import sys
-import materials
-
+import tkinter
+from tkinter import ttk
+import mod_materials
 
 def calc_dep_widths(revbias, pnd):
     # calculates the depletion region widths for each reverse bias
@@ -22,7 +23,7 @@ def calc_dep_widths(revbias, pnd):
     ep = er*(8.854*10**(-14)) # permittivity (relative * permittivity of vacuum)
     q = 1.6029*10**(-19) # electron charge in C
 
-    # calculations for loop
+    # calculations loop
     for i in range(len(revbias)):
         vbarrier.append(0.26 * np.log(Na * Nd / (Ni**2)) + np.abs(revbias[i])) # in V
         pside.append(np.sqrt(2 * ep / q * Nd / Na * vbarrier[i] / (Na + Nd)) * 10 ** 4) # in um
@@ -32,13 +33,13 @@ def calc_dep_widths(revbias, pnd):
     outstack = np.stack((pside,nside,depwidth), axis=0)
     return outstack
 
-def skt_2D_dep_widths(widths):
+def skt_2D_dep_widths(revbias, widths):
     # draws and animates depletion region as reverse bias increases
     pygame.init()
-    screen = pygame.display.set_mode((600,600))
+    screen = pygame.display.set_mode((400,400))
+    pygame.display.set_caption('depletion region visual')
     done = False
     clock = pygame.time.Clock()
-
     x = 300
     y = 200
     dispwidth = []
@@ -48,11 +49,11 @@ def skt_2D_dep_widths(widths):
 
     i = 0
     pygame.draw.rect(screen, (255, 125, 45), pygame.Rect(x, y, dispwidth[i], 100))
-    cxpos = x + dispwidth[i] + nside[i]*10 # delineates p-doped and n-doped regions (p on left, n on right)
+    cxpos = x + dispwidth[i]/2 + pside[i]*10 # delineates p-doped and n-doped regions (p on left, n on right)
     pygame.draw.line(screen, (255,0,0), (cxpos, 200), (cxpos, 300), 2) # 2 px thick line through middle of depletion region
 
     font = pygame.font.Font('freesansbold.ttf', 32)
-    text = font.render(str(round(depwidth[i], 4)) + " um", True, (255, 255, 255), (0, 0, 0)) # white text on black background
+    text = font.render(str(round(depwidth[i], 4)) + " um - " + str(revbias[i]) + " V", True, (255, 255, 255), (0, 0, 0)) # white text on black background
     textRect = text.get_rect()
 
     i = 1
@@ -66,11 +67,10 @@ def skt_2D_dep_widths(widths):
             add = (dispwidth[i]-dispwidth[i-1])/2
             screen.fill((0,0,0)) # refill screen to black
             pygame.draw.rect(screen, (255,125,45), pygame.Rect(x,y, dispwidth[i-1] + add, 100))
-            cxpos = x + dispwidth[i-1] + add + nside[i]*10
-            val = x + dispwidth[i-1] + add
-            print(str(cxpos) + "   " + str(val) + "\n")
+            cxpos = x + (dispwidth[i-1] + add)/2 + pside[i]*10
+            print(str(cxpos) + "   " + str(x) + "\n")
             pygame.draw.line(screen, (255,0,0), (cxpos, 200), (cxpos, 300), 2)
-            text = font.render(str(round(depwidth[i], 4)) + " um", True, (255, 255, 255), (0, 0, 0))
+            text = font.render(str(round(depwidth[i], 4)) + " um - " + str(revbias[i]) + " V", True, (255, 255, 255), (0, 0, 0))
             textRect = text.get_rect()
             screen.blit(text, textRect)
             i += 1
@@ -80,11 +80,11 @@ def skt_2D_dep_widths(widths):
         pygame.display.flip() # update
         clock.tick(60) # refresh every 1/60 sec
 
-def main():
+def init_funcs(name):
     # start
-    pnd = materials.make_pnd("AlGaAs")
+    pnd = mod_materials.make_pnd(name)
     if pnd.name is "null":
-        print("\n invalid apd name")
+        print("\n invalid pnd name")
         sys.exit()
     else:
         revbias = list(np.arange(0, pnd.stop, 0.5))
@@ -93,10 +93,12 @@ def main():
         print(widths[2])
 
     # drawings and plots
-    skt_2D_dep_widths(widths)
-    plt.plot(revbias, widths[2])
+    skt_2D_dep_widths(revbias, widths)
+
+    plt.clf()
+    fig = plt.plot(revbias, widths[2])
+    title = name + " depletion width vs. reverse bias"
+    plt.title(title, fontsize=18)
+    plt.xlabel("reverse bias (V)", fontsize=15)
+    plt.ylabel("depletion width (um)", fontsize=15)
     plt.show()
-
-
-main()
-# end
