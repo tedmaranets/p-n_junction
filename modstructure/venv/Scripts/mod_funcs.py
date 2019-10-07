@@ -40,7 +40,7 @@ def skt_2D_dep_widths(revbias, widths):
     pygame.display.set_caption('depletion region visual')
     done = False
     clock = pygame.time.Clock()
-    x = 300
+    x = 100
     y = 200
     dispwidth = []
     pside = widths[0] ; nside = widths[1] ; depwidth = widths[2] ;
@@ -49,12 +49,11 @@ def skt_2D_dep_widths(revbias, widths):
 
     i = 0
     pygame.draw.rect(screen, (255, 125, 45), pygame.Rect(x, y, dispwidth[i], 100))
-    cxpos = x + dispwidth[i]/2 + pside[i]*10 # delineates p-doped and n-doped regions (p on left, n on right)
+    cxpos = x + dispwidth[i] + 10*nside[i] # delineates p-doped and n-doped regions (p on left, n on right)
     pygame.draw.line(screen, (255,0,0), (cxpos, 200), (cxpos, 300), 2) # 2 px thick line through middle of depletion region
 
     font = pygame.font.Font('freesansbold.ttf', 32)
     text = font.render(str(round(depwidth[i], 4)) + " um - " + str(revbias[i]) + " V", True, (255, 255, 255), (0, 0, 0)) # white text on black background
-    textRect = text.get_rect()
 
     i = 1
     while not done:
@@ -62,13 +61,16 @@ def skt_2D_dep_widths(revbias, widths):
             if event.type == pygame.QUIT: # quitting the program
                 done = True
         if i != len(dispwidth):
-            sub = dispwidth[i]/2
-            x = 200 - sub
-            add = (dispwidth[i]-dispwidth[i-1])/2
+            #sub = dispwidth[i]/2
+            #x = 200 - sub
+            #add = (dispwidth[i]-dispwidth[i-1])/2
             screen.fill((0,0,0)) # refill screen to black
-            pygame.draw.rect(screen, (255,125,45), pygame.Rect(x,y, dispwidth[i-1] + add, 100))
-            cxpos = x + (dispwidth[i-1] + add)/2 + pside[i]*10
-            print(str(cxpos) + "   " + str(x) + "\n")
+            pygame.draw.rect(screen, (255,125,45), pygame.Rect(x,y, dispwidth[i], 100))
+
+            #cxpos = x + 10*pside[i]
+
+            print(str(cxpos) + "   " + str(x + dispwidth[i]) + "\n")
+            cxpos = x + dispwidth[i] + 10 * nside[i]
             pygame.draw.line(screen, (255,0,0), (cxpos, 200), (cxpos, 300), 2)
             text = font.render(str(round(depwidth[i], 4)) + " um - " + str(revbias[i]) + " V", True, (255, 255, 255), (0, 0, 0))
             textRect = text.get_rect()
@@ -88,9 +90,9 @@ def init_funcs(name):
         sys.exit()
     else:
         revbias = list(np.arange(0, pnd.stop, 0.5))
-        print(revbias)
+        #print(revbias)
         widths = calc_dep_widths(revbias, pnd)  # wafer properties of APD
-        print(widths[2])
+        #print(widths[2])
 
     # drawings and plots
     skt_2D_dep_widths(revbias, widths)
