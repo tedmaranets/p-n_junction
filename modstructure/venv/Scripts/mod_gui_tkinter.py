@@ -18,12 +18,11 @@ def create_window():
     master.geometry("680x560")
     master.resizable(False,False)
     master.title("Depletion region demo")
-    #master.columnconfigure(0, weight=1)  # these two lines just resize the frame if the main window is resized
-    #master.rowconfigure(0, weight=1)
 
     leftframe = tkinter.Frame(master)
     leftframe.grid(row=0, column=0)
 
+    # developing left panel
     list_label = tkinter.Label(leftframe, text="Junction Material")
     list_label.grid(row=0, column=0, padx=10, pady=5)
     listbox = tkinter.Listbox(leftframe)
@@ -32,44 +31,41 @@ def create_window():
 
     mat_choices = mod_materials.get_choices()
     for item in mat_choices:
-        listbox.insert(tkinter.END, item)
+        listbox.insert(tkinter.END, item) # add all available material data to listbox
 
-
+    # developing right panel
+    # the tabs are basically frames located within the right panel (also a frame)
     tab_parent = ttk.Notebook(master, width=500, height=500)
     tab_parent.grid(row=0, column=1, rowspan=500, columnspan=500, padx=5, pady=10)
-    # developing the animation tab
+    # first tab is animation tab
     animation_tab = ttk.Frame(tab_parent)
     tab_parent.add(animation_tab, text='Animation')
+    # statements that integrate pygame and tkinter, don't touch
     os.environ['SDL_WINDOWID'] = str(animation_tab.winfo_id())
     os.environ['SDL_VIDEODRIVER'] = 'windib'
     screen = pygame.display.set_mode((500, 500))
-    # create the graph tab
+    # 2nd tab is graph tab
     graph_tab = ttk.Frame(tab_parent)
     tab_parent.add(graph_tab, text='Graph')
 
 
-    def get_list(event):
+    def get_list(event): # triggered if list item is selected
         index = listbox.curselection()[0]
-        seltext = listbox.get(index)
+        seltext = listbox.get(index) # get string name of current selected item in listbox
         #print(seltext)
-        master.title(seltext + " Depletion region demo")
-        [revbias, dep_widths] = mod_funcs.run_main(seltext)
+        master.title(seltext + " Depletion region demo") # adjust title
+        [revbias, dep_widths] = mod_funcs.run_main(seltext) # run calculations and pygame animation
+        # weird bug with the animation clearing after hovering mouse over it
 
-        def all_children(window):
-            _list = window.winfo_children()
+        graphlist = graph_tab.winfo_children()
+        for itm in graphlist:
+            if itm.winfo_children():
+                list.extend(itm.winfo_children())
+        for itm in graphlist:
+            itm.pack_forget() # removes previous graph/stuff in the graph tab for a new graph
+                            # doing this because ax.clf() or ax.cla() wasn't working - Teddy 10/8/2019
 
-            for itm in _list:
-                if itm.winfo_children():
-                    _list.extend(itm.winfo_children())
-
-            return _list
-
-        graph_con = all_children(graph_tab)
-        for obj in graph_con:
-            obj.pack_forget() # removes previous graph/stuff in the graph tab for a new graph
-                            # doing this because ax.clf() or ax.cla() wasn't working - TM 10/8/2019
-
-        fig = Figure(figsize=(5, 4), dpi=100)
+        fig = Figure(figsize=(5, 4), dpi=100) # create graph figure to put into graph_tab
         ax = fig.add_subplot(111)
         ax.plot(revbias, dep_widths)
 
@@ -94,7 +90,7 @@ def create_window():
     pygame.init()
     pygame.display.flip()
 
-    while True:
+    while True: # program runs till closed
         pygame.display.flip()
         master.mainloop()
 
