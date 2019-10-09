@@ -1,12 +1,5 @@
 class Material(object):
 
-    name = ""
-    Na = 0
-    Nd = 0
-    Ni = 0
-    er = 0
-    stop = 0
-
     def __init__(self, name, Na, Nd, Ni, er, stop):
         self.name = name
         self.Na = Na
@@ -16,9 +9,7 @@ class Material(object):
         self.stop = stop
 
 # data list array
-# eventually make this a file (ascii, excel, origin?)
-materials = [["AlGaAs",1 * 10 ** 18, 5 * 10 ** 14, 34.43134, 10.628, 38],
-             ["4H-SiC",2.8 * 10 ** 15 , 3 * 10 ** 19, 5 * 10 ** (-9) , 9.66, 145]
+materials = [["AlGaAs (30%Al 70%Ga)",1 * 10 ** 16, 1 * 10 ** 17, 2100, 12.048, 38.5]
              ]
 
 def make_pnd(name): # creates an object with necessary properties for calculations

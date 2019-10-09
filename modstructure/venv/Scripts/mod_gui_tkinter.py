@@ -27,7 +27,7 @@ def create_window():
     list_label.grid(row=0, column=0, padx=10, pady=5)
     listbox = tkinter.Listbox(leftframe)
     listbox.grid(row=1, column=0, padx=10, pady=5)
-    listbox.config(height=0, relief=tkinter.RIDGE, selectmode=tkinter.BROWSE)  # adjusts listbox height according to how many items are in the list
+    listbox.config(width = 0, height=0, relief=tkinter.RIDGE, selectmode=tkinter.BROWSE)  # adjusts listbox width and height according to how many items are in the list
 
     mat_choices = mod_materials.get_choices()
     for item in mat_choices:
@@ -43,6 +43,7 @@ def create_window():
     # statements that integrate pygame and tkinter, don't touch
     os.environ['SDL_WINDOWID'] = str(animation_tab.winfo_id())
     os.environ['SDL_VIDEODRIVER'] = 'windib'
+    pygame.display.init()
     screen = pygame.display.set_mode((500, 500))
     # 2nd tab is graph tab
     graph_tab = ttk.Frame(tab_parent)
@@ -65,18 +66,18 @@ def create_window():
             itm.pack_forget() # removes previous graph/stuff in the graph tab for a new graph
                             # doing this because ax.clf() or ax.cla() wasn't working - Teddy 10/8/2019
 
-        fig = Figure(figsize=(5, 4), dpi=100) # create graph figure to put into graph_tab
-        ax = fig.add_subplot(111)
+        fig = Figure(figsize=(5, 4), dpi=85) # create graph figure to put into graph_tab
+        ax = fig.add_subplot()
         ax.plot(revbias, dep_widths)
 
         canvas = FigureCanvasTkAgg(fig, master=graph_tab)  # A tk.DrawingArea.
         canvas.draw()
         canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
-        title = seltext + " Depletion width vs. Reverse bias"
-        ax.set_title(title, fontsize=15)
-        ax.set_xlabel('Reverse bias (V)',fontsize=15)
-        ax.set_ylabel('Depletion width (um)',fontsize=15)
+        title = seltext + "\nDepletion width vs. Reverse bias "
+        ax.set_title(title, fontsize=12)
+        ax.set_xlabel('bias (V)',fontsize=12)
+        ax.set_ylabel('width (nm)',fontsize=12)
 
     # bindings and exit protocol
     listbox.bind('<ButtonRelease-1>', get_list)

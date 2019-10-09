@@ -4,9 +4,8 @@
     <list default="true" id="64aa8abb-a189-4ec4-a656-c33766cf07ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/Scripts/mod_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/mod_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/mod_main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/mod_gui_tkinter.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/mod_gui_tkinter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/Scripts/mod_materials.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/mod_materials.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/test_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/test_gui.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

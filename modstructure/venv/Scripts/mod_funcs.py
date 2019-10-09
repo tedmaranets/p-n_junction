@@ -24,58 +24,72 @@ def calc_dep_widths(rev_bias, pnd):
 
     # calculations loop
     for i in range(len(rev_bias)):
-        vbarrier.append(0.26 * np.log(Na * Nd / (Ni**2)) + np.abs(rev_bias[i])) # in V
-        pside.append(np.sqrt(2 * ep / q * Nd / Na * vbarrier[i] / (Na + Nd)) * 10 ** 4) # in um
-        nside.append(-np.sqrt(2 * ep / q * Na / Nd * vbarrier[i] / (Na + Nd)) * 10 ** 4)
-        dep_width.append(pside[i]-nside[i]) # in um
+        vbarrier.append(0.026 * np.log(Na * Nd / (Ni**2)) + np.abs(rev_bias[i])) # in V
+        pside.append(np.sqrt(2 * ep / q * Nd / Na * vbarrier[i] / (Na + Nd)) / (10**(-7))) # in nm
+        nside.append(-np.sqrt(2 * ep / q * Na / Nd * vbarrier[i] / (Na + Nd)) / (10**(-7)))
+        dep_width.append(pside[i]-nside[i]) # in nm
 
     widths_arrays = np.stack((pside,nside,dep_width), axis=0)
     return widths_arrays
 
 def skt_2D_dep_widths(revbias, widths):
-
-    # draws and animates depletion region as reverse bias increases
+    # initialize
     pygame.init()
     screen = pygame.display.set_mode((500,500))
-    pygame.display.set_caption('depletion region visual')
+    font = pygame.font.SysFont('arialms', 18)
+    #print(pygame.font.get_fonts())
     done = False
     clock = pygame.time.Clock()
-    x = 100
-    y = 200
-    pside = widths[0] * 10 ; nside = widths[1] * 10 ; dep_width = widths[2] * 10;
-    i = 0
-    pygame.draw.rect(screen, (255, 125, 45), pygame.Rect(x, y, dep_width[i], 100))
-    cxpos = x + dep_width[i] + 10*nside[i] # delineates p-doped and n-doped regions (p on left, n on right)
-    pygame.draw.line(screen, (255,0,0), (cxpos, 200), (cxpos, 300), 2) # 2 px thick line through middle of depletion region
-
-    font = pygame.font.Font('freesansbold.ttf', 32)
-    text = font.render(str(round(dep_width[i] / 10, 4)) + " um - " + str(revbias[i]) + " V", True, (255, 255, 255), (0, 0, 0)) # white text on black background
+    # draw junction
+    xp = 100
+    yp = 150
+    junc_width = 300
+    junc_height = 200
+    xn = xp + junc_width/2 - 1
+    yn = yp
+    p_color = (21, 227, 150) ; n_color = (46, 151, 237)
+    pygame.draw.rect(screen, p_color, pygame.Rect(xp, yp, junc_width/2, junc_height)) # p-type region
+    pygame.draw.rect(screen, n_color, pygame.Rect(xn, yn, junc_width/2, junc_height)) # n-type region
+    ptext = font.render("p-type",True, (0,0,0))
+    ntext = font.render("n-type", True, (0,0,0))
+    screen.blit(ptext, (xp+20,yp))
+    screen.blit(ntext, (xn+20,yn))
+    # draw depletion region
+    p_width = widths[0] ; n_width = widths[1]
+    pw_color = (0,0,255) ; nw_color = (255,0,0)
+    cxpos = xp + junc_width/2
+    nm_topix_prop = 0.02
+    pw_xpos = cxpos - nm_topix_prop * p_width[0]
+    nw_xpos = cxpos - nm_topix_prop * n_width[0]
+    print(str(nm_topix_prop * p_width[0]))
+    print(str(pw_xpos))
+    pygame.draw.rect(screen, pw_color, pygame.Rect(pw_xpos, yp, nm_topix_prop * p_width[0], junc_height))
+    pygame.draw.rect(screen, nw_color, pygame.Rect(cxpos-1, yp, - nm_topix_prop * n_width[0], junc_height))
 
     i = 1
     while not done:
         for event in pygame.event.get():
             if event.type == pygame.QUIT: # quitting the program
                 done = True
-        if i != len(dep_width):
-            #sub = dep_width[i]/2
-            #x = 200 - sub
-            #add = (dep_width[i]-dep_width[i-1])/2
-            screen.fill((0,0,0)) # refill screen to black
-            pygame.draw.rect(screen, (255,125,45), pygame.Rect(x,y, dep_width[i], 100))
 
-            #cxpos = x + 10*pside[i]
-
-            #print(str(cxpos) + "   " + str(x + dep_width[i]) + "\n")
-            cxpos = x + dep_width[i] + 10 * nside[i]
-            pygame.draw.line(screen, (255,0,0), (cxpos, 200), (cxpos, 300), 2)
-            text = font.render(str(round(dep_width[i] / 10, 4)) + " um - " + str(revbias[i]) + " V", True, (255, 255, 255), (0, 0, 0))
-            textRect = text.get_rect()
-            screen.blit(text, textRect)
+        if i != len(widths[2]):
+            pw_xpos = cxpos - nm_topix_prop * p_width[i]
+            nw_xpos = cxpos - nm_topix_prop * n_width[i]
+            #print(str(cxpos-pw_xpos) + "   " + str(nm_topix_prop * p_width[i]))
+            screen.fill((0,0,0))
+            pygame.draw.rect(screen, p_color, pygame.Rect(xp, yp, junc_width / 2, junc_height))  # p-type region
+            pygame.draw.rect(screen, n_color, pygame.Rect(xn, yn, junc_width / 2, junc_height))  # n-type region
+            pygame.draw.rect(screen, pw_color, pygame.Rect(pw_xpos,yp, nm_topix_prop * p_width[i], junc_height)) # p depletion
+            pygame.draw.rect(screen, nw_color, pygame.Rect(cxpos-1, yn, - nm_topix_prop * n_width[i], junc_height)) # n depletion
+            ptext = font.render("p-type", True, (255, 255, 255))
+            ntext = font.render("n-type", True, (255, 255, 255))
+            screen.blit(ptext, (xp + 20, yp-30))
+            screen.blit(ntext, (xn + 20, yn-30))
             i += 1
         else:
-            done = True # quit
+            done = True
 
-        pygame.display.flip() # update
+        pygame.display.update() # update
         clock.tick(60) # refresh every 1/60 sec
 
 def run_main(name):
@@ -83,7 +97,10 @@ def run_main(name):
     pnd = mod_materials.make_pnd(name)
     revbias = list(np.arange(0, pnd.stop, 0.5))
     widths = calc_dep_widths(revbias, pnd)
+    #print(widths[0])
+    #print(widths[1])
+    #print(widths[2])
     skt_2D_dep_widths(revbias, widths)
-
+    #pygame.display.flip()
     return revbias, widths[2]
 
