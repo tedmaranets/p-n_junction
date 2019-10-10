@@ -10,8 +10,8 @@ from matplotlib.backends.backend_tkagg import (
 
 from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
-import mod_funcs
-import mod_materials
+import mod_funcs_10
+import mod_materials_10
 
 def create_window():
     master = tkinter.Tk()
@@ -32,7 +32,7 @@ def create_window():
     source_label = tkinter.Label(leftframe, text="Source")
     source_label.grid(row=2, column=0, padx=10, pady=5)
 
-    mat_choices = mod_materials.get_choices()
+    mat_choices = mod_materials_10.get_choices()
     design_texts = []
     for item in mat_choices[0]:
         listbox.insert(tkinter.END, item) # add all available material name data to listbox
@@ -65,7 +65,7 @@ def create_window():
         source_item_label = tkinter.Label(leftframe, text=design_texts[index])
         source_item_label.grid(row=3, column=0, padx=10, pady=2)
 
-        [revbias, dep_widths] = mod_funcs.run_main(seltext)
+        [revbias, dep_widths] = mod_funcs_10.run_main(seltext)
         # run calculations and pygame animation
         # weird bug with the animation clearing after hovering mouse over it
 

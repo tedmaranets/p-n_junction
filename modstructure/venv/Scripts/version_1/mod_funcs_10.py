@@ -5,7 +5,7 @@ import time
 import sys
 import tkinter
 from tkinter import ttk
-import mod_materials
+import mod_materials_10
 
 def calc_dep_widths(rev_bias, pnd):
     # calculates the depletion region widths for each reverse bias
@@ -121,7 +121,7 @@ def skt_2D_dep_widths(revbias, widths):
 
 def run_main(name):
     # start
-    pnd = mod_materials.make_pnd(name)
+    pnd = mod_materials_10.make_pnd(name)
     revbias = list(np.arange(0, pnd.stop, 0.5))
     widths = calc_dep_widths(revbias, pnd)
     #print(widths[0])
