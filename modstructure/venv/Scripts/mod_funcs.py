@@ -55,16 +55,29 @@ def skt_2D_dep_widths(revbias, widths):
     screen.blit(ptext, (xp+20,yp))
     screen.blit(ntext, (xn+20,yn))
     # draw depletion region
-    p_width = widths[0] ; n_width = widths[1]
+    p_width = widths[0] ; n_width = widths[1] ; dep_width = widths[2]
     pw_color = (0,0,255) ; nw_color = (255,0,0)
     cxpos = xp + junc_width/2
     nm_topix_prop = 0.02
     pw_xpos = cxpos - nm_topix_prop * p_width[0]
     nw_xpos = cxpos - nm_topix_prop * n_width[0]
-    print(str(nm_topix_prop * p_width[0]))
-    print(str(pw_xpos))
+    #print(str(nm_topix_prop * p_width[0]))
+    #print(str(pw_xpos))
     pygame.draw.rect(screen, pw_color, pygame.Rect(pw_xpos, yp, nm_topix_prop * p_width[0], junc_height))
     pygame.draw.rect(screen, nw_color, pygame.Rect(cxpos-1, yp, - nm_topix_prop * n_width[0], junc_height))
+
+    info = str(round(dep_width[0]/1000,2)) + " um - " + str(revbias[0]) + " V"
+    print(info + " p dep = " + str(round(p_width[0] / 1000, 2)) + " n dep = " + str(round(n_width[0] / 1000, 2)))
+    info_text = font.render(info, True, (255,255,255))
+    screen.blit(info_text, (xp + 70, yp + junc_height + 20))
+    legend_red = font.render("red",True,(255,0,0))
+    legend_plus = font.render("= +",True,(255,255,255))
+    screen.blit(legend_red,(xn+junc_width/2-50,yn + junc_height + 20))
+    screen.blit(legend_plus, (xn+junc_width/2- 20,yn + junc_height + 20))
+    legend_blue = font.render("blue", True,(0, 0, 255))
+    legend_minus = font.render("= -", True, (255, 255, 255))
+    screen.blit(legend_blue, (xn + junc_width / 2 - 50, yn + junc_height + 45))
+    screen.blit(legend_minus, (xn + junc_width / 2 - 10, yn + junc_height + 45))
 
     i = 1
     while not done:
@@ -75,16 +88,30 @@ def skt_2D_dep_widths(revbias, widths):
         if i != len(widths[2]):
             pw_xpos = cxpos - nm_topix_prop * p_width[i]
             nw_xpos = cxpos - nm_topix_prop * n_width[i]
-            #print(str(cxpos-pw_xpos) + "   " + str(nm_topix_prop * p_width[i]))
+
             screen.fill((0,0,0))
             pygame.draw.rect(screen, p_color, pygame.Rect(xp, yp, junc_width / 2, junc_height))  # p-type region
             pygame.draw.rect(screen, n_color, pygame.Rect(xn, yn, junc_width / 2, junc_height))  # n-type region
-            pygame.draw.rect(screen, pw_color, pygame.Rect(pw_xpos,yp, nm_topix_prop * p_width[i], junc_height)) # p depletion
-            pygame.draw.rect(screen, nw_color, pygame.Rect(cxpos-1, yn, - nm_topix_prop * n_width[i], junc_height)) # n depletion
+            pygame.draw.rect(screen, pw_color, pygame.Rect(pw_xpos,yp, nm_topix_prop * p_width[i], junc_height))
+            pygame.draw.rect(screen, nw_color, pygame.Rect(cxpos-1, yn, - nm_topix_prop * n_width[i], junc_height))
             ptext = font.render("p-type", True, (255, 255, 255))
             ntext = font.render("n-type", True, (255, 255, 255))
             screen.blit(ptext, (xp + 20, yp-30))
             screen.blit(ntext, (xn + 20, yn-30))
+
+            info = str(round(dep_width[i]/1000,2)) + " um - " + str(revbias[i]) + " V"
+            print(info + " p dep = " + str(round(p_width[i]/1000,2)) + " n dep = " + str(round(n_width[i]/1000,2)))
+            info_text = font.render(info, True, (255, 255, 255))
+            screen.blit(info_text, (xp + 70, yp + junc_height + 20))
+            legend_red = font.render("red", True,(255, 0, 0))
+            legend_plus = font.render("= +",True, (255, 255, 255))
+            screen.blit(legend_red, (xn + junc_width / 2 - 50, yn + junc_height + 20))
+            screen.blit(legend_plus, (xn + junc_width / 2 - 20, yn + junc_height + 20))
+            legend_blue = font.render("blue",True, (0, 0, 255))
+            legend_minus = font.render("= -", True, (255, 255, 255))
+            screen.blit(legend_blue, (xn + junc_width / 2 - 50, yn + junc_height + 45))
+            screen.blit(legend_minus, (xn + junc_width / 2 - 10, yn + junc_height + 45))
+
             i += 1
         else:
             done = True
@@ -101,6 +128,6 @@ def run_main(name):
     #print(widths[1])
     #print(widths[2])
     skt_2D_dep_widths(revbias, widths)
-    #pygame.display.flip()
+
     return revbias, widths[2]
 
