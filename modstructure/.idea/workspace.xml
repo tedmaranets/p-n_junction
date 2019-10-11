@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="64aa8abb-a189-4ec4-a656-c33766cf07ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/data/AlGaAs_D19.1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/data/AlGaAs_D19.1.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/AlGaAs_D191.csv" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/AlGaAs_D191.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_funcs_11.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_funcs_11.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_materials_11.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_materials_11.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/test_csv.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/test_csv.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -146,8 +151,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.test_csv" />
-        <item itemvalue="Python.mod_materials_11" />
         <item itemvalue="Python.mod_gui_tkinter_10" />
+        <item itemvalue="Python.mod_materials_11" />
         <item itemvalue="Python.mod_gui_tkinter_1.0" />
         <item itemvalue="Python.mod_gui_tkinter (1)" />
       </list>
