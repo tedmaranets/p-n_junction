@@ -10,8 +10,8 @@ from matplotlib.backends.backend_tkagg import (
 
 from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
-import mod_funcs_10
-import mod_materials_10
+import mod_funcs_11
+import mod_materials_11
 
 def create_window():
     master = tkinter.Tk()
@@ -32,7 +32,7 @@ def create_window():
     source_label = tkinter.Label(leftframe, text="Source")
     source_label.grid(row=2, column=0, padx=10, pady=5)
 
-    mat_choices = mod_materials_10.get_choices()
+    mat_choices = mod_materials_11.get_choices()
     design_texts = []
     for item in mat_choices[0]:
         listbox.insert(tkinter.END, item) # add all available material name data to listbox
@@ -65,7 +65,7 @@ def create_window():
         source_item_label = tkinter.Label(leftframe, text=design_texts[index])
         source_item_label.grid(row=3, column=0, padx=10, pady=2)
 
-        [revbias, dep_widths] = mod_funcs_10.run_main(seltext)
+        [revbias, dep_widths] = mod_funcs_11.run_main(seltext)
         # run calculations and pygame animation
         # weird bug with the animation clearing after hovering mouse over it
 
@@ -79,7 +79,8 @@ def create_window():
 
         fig = Figure(figsize=(5, 4), dpi=85) # create graph figure to put into graph_tab
         ax = fig.add_subplot()
-        ax.plot(revbias, dep_widths/1000)
+        #print(str(len(revbias)) + "  " + str(len(dep_widths)))
+        ax.plot(revbias, dep_widths / 1000)
 
         canvas = FigureCanvasTkAgg(fig, master=graph_tab)  # A tk.DrawingArea.
         canvas.draw()

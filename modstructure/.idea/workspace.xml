@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="64aa8abb-a189-4ec4-a656-c33766cf07ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/data/AlGaAs_D19.1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/data/AlGaAs_D19.1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/AlGaAs_D191.csv" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/AlGaAs_D191.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_funcs_11.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_funcs_11.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_gui_tkinter_11.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_gui_tkinter_11.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_materials_11.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_materials_11.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/test_csv.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/test_csv.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,28 +40,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test_csv">
-    <configuration name="mod_gui_tkinter (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="modstructure" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv/Scripts/version_1" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/Scripts/version_1/mod_gui_tkinter.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.mod_gui_tkinter_11">
     <configuration name="mod_gui_tkinter_10" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="modstructure" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -85,7 +62,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="mod_gui_tkinter_1.0" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="mod_gui_tkinter_11" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="modstructure" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -93,11 +70,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv/Scripts/version_1" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv/Scripts/version_1.1" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/Scripts/version_1/mod_gui_tkinter_1.0.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_gui_tkinter_11.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -148,13 +125,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test_sketch" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="modstructure" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv/Scripts/version_1.1" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/Scripts/version_1.1/test_sketch.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.mod_gui_tkinter_11" />
+        <item itemvalue="Python.test_sketch" />
+        <item itemvalue="Python.mod_materials_11" />
         <item itemvalue="Python.test_csv" />
         <item itemvalue="Python.mod_gui_tkinter_10" />
-        <item itemvalue="Python.mod_materials_11" />
-        <item itemvalue="Python.mod_gui_tkinter_1.0" />
-        <item itemvalue="Python.mod_gui_tkinter (1)" />
       </list>
     </recent_temporary>
   </component>
