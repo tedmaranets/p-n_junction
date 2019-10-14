@@ -21,7 +21,7 @@ def calc_and_skt_dep_widths(pnd):
     first_n_index = 0
     first_p_index = 0
     p_after_n = False
-    i = 0
+    i = 1
     while not p_after_n:
         if layer_array[i, 2] == 'N':
             first_n_index = i
@@ -48,7 +48,8 @@ def calc_and_skt_dep_widths(pnd):
     # maybe doesn't matter if future material data is formatted the same
     i = first_n_index
     k = 1
-    while layer_array[i, 2] != 'U':  # up the column (for n layers)
+    #layer_array[i, 2] != 'U'
+    while i != 0:  # up the column (for n layers)
         n_indexes.append(k)
         n_layer_Al.append(layer_array[i, 1])
         n_layer_con.append(layer_array[i, 3])
@@ -106,11 +107,7 @@ def calc_and_skt_dep_widths(pnd):
         nside[i] = -numpy.sqrt(2 * ep / q * Na / Nd * vbarrier[i] / (Na + Nd)) / (10 ** (-7))
         full_dep[i] = pside[i] - nside[i]
         i += 1
-    #print(nside)
-    #print(pside)
-    # print(str(kp) + "  " + str(kn))
-    # plt.plot(revbias,full_dep)
-    # plt.show()
+
 
     widths = numpy.column_stack((nside,pside,full_dep))
 
@@ -131,11 +128,11 @@ def calc_and_skt_dep_widths(pnd):
 
     numlayers = len(layer_array[1:, 0])
     actlayersum = 0
-    i = 3  # ignore undoped regions
-    while i != numlayers:
+    i = 1  # ignore undoped regions
+    while i != numlayers+1:
         actlayersum += ast.literal_eval(layer_array[i, 4])  # in um
         i += 1
-    i = 3
+    i = 1
     props = []
     while i != numlayers + 1:
         props.append(ast.literal_eval(layer_array[i, 4]) / actlayersum)
@@ -145,7 +142,6 @@ def calc_and_skt_dep_widths(pnd):
         pix_deps.append(props[i] * junc_width)
 
     pix_to_nm = (junc_width / actlayersum) / 1000  # 1 px for "pix_to_nm" nanometers
-    #print(pix_to_nm)
 
     n_high_color = (46, 151, 237)  # blue proportional to dopant concentration
     p_high_color = (21, 227, 150)  # green proportional to dopant concentration
@@ -172,7 +168,8 @@ def calc_and_skt_dep_widths(pnd):
 
         ######## draw base rectangles to show all layers ########
         def draw_base_regions():
-            k = first_n_index - len(n_indexes) + 1
+            #k = first_n_index
+            k = 1
             i = 0
             xn = xn_start
             nplus = font.render("n+", True, (255, 255, 255))
@@ -181,7 +178,7 @@ def calc_and_skt_dep_widths(pnd):
                 currcon = ast.literal_eval(layer_array[k, 3])
                 n_color = n_high_color
                 if currcon != maxconn:
-                    n_color = (46, 151, 237 - 6000 * (currcon / maxconn))
+                    n_color = (46, 151, 237 - (1/200) * (maxconn/currcon))
                     screen.blit(nminus, (xn + pix_deps[i] / 2 - 5, yn_start - 20))
                 else:
                     screen.blit(nplus, (xn + pix_deps[i] / 2 - 5, yn_start - 20))
@@ -190,7 +187,6 @@ def calc_and_skt_dep_widths(pnd):
                 pygame.draw.line(screen, (255, 255, 255), (xn - 1, yn_start), (xn - 1, yn_start + junc_height - 1))
                 i += 1
                 k += 1
-            k = first_p_index
             mid = xn
             xp = xn
             pplus = font.render("p+", True, (255, 255, 255))
@@ -199,7 +195,7 @@ def calc_and_skt_dep_widths(pnd):
                 currcon = ast.literal_eval(layer_array[k, 3])
                 p_color = p_high_color
                 if currcon != maxconp:
-                    p_color = (21, 227 - 6000 * (currcon / maxconp), 150)
+                    p_color = (21, 227 - (1/200) * (maxconn/currcon), 150)
                     screen.blit(pminus, (xp + pix_deps[i] / 2 - 5, yn_start - 20))
                 else:
                     screen.blit(pplus, (xp + pix_deps[i] / 2 - 5, yn_start - 20))
@@ -209,7 +205,6 @@ def calc_and_skt_dep_widths(pnd):
                     pygame.draw.line(screen, (255, 255, 255), (xp, yn_start), (xp, yn_start + junc_height - 1))
                 i += 1
                 k += 1
-
             return mid
 
         if j != len(full_dep):
@@ -233,7 +228,6 @@ def calc_and_skt_dep_widths(pnd):
 def run_main(name):
     # start
     pnd = mod_materials_11.make_pnd(name)
-
     [revbias, widths] = calc_and_skt_dep_widths(pnd)
 
     return revbias, widths[0:,2]

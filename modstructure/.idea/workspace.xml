@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="64aa8abb-a189-4ec4-a656-c33766cf07ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/AlGaAs_D191.csv" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/AlGaAs_D191.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_funcs_11.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_funcs_11.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_gui_tkinter_11.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_gui_tkinter_11.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_materials_11.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_materials_11.py" afterDir="false" />

@@ -31,6 +31,9 @@ def create_window():
     # adjusts listbox width and height according to how many items are in the list
     source_label = tkinter.Label(leftframe, text="Source")
     source_label.grid(row=2, column=0, padx=10, pady=5)
+    source_label_text = tkinter.StringVar()
+    source_item_label = tkinter.Label(leftframe, textvariable=source_label_text)
+    source_item_label.grid(row=3, column=0, padx=10, pady=2)
 
     mat_choices = mod_materials_11.get_choices()
     design_texts = []
@@ -62,8 +65,7 @@ def create_window():
         seltext = listbox.get(index) # get string name of current selected item in listbox
         #print(seltext)
         master.title(seltext + " Depletion region demo") # adjust title
-        source_item_label = tkinter.Label(leftframe, text=design_texts[index])
-        source_item_label.grid(row=3, column=0, padx=10, pady=2)
+        source_label_text.set(design_texts[index])
 
         [revbias, dep_widths] = mod_funcs_11.run_main(seltext)
         # run calculations and pygame animation
