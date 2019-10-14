@@ -209,11 +209,25 @@ def calc_and_skt_dep_widths(pnd):
 
         if j != len(full_dep):
             screen.fill((0, 0, 0))
+            nw_color = (237, 90, 69)
+            pw_color = (231, 149, 75)
+
+            info = "Full width: " + str(round(full_dep[j] / 1000, 2)) + " um | Reverse Bias -" + str(revbias[j]) + " V"
+            info_text = font.render(info, True, (255, 255, 255))
+            screen.blit(info_text, (xp + 70, yn_start + junc_height + 20))
+            legend_red = font.render("red", True, nw_color)
+            legend_plus = font.render("=  +", True, (255, 255, 255))
+            screen.blit(legend_red, (xn + junc_width / 2 + 120, yn_start + junc_height + 20))
+            screen.blit(legend_plus, (xn + junc_width / 2 + 140, yn_start + junc_height + 20))
+            legend_blue = font.render("orange", True, pw_color)
+            legend_minus = font.render("=  -", True, (255, 255, 255))
+            screen.blit(legend_blue, (xn + junc_width / 2 + 120, yn_start + junc_height + 45))
+            screen.blit(legend_minus, (xn + junc_width / 2 + 160, yn_start + junc_height + 45))
+
             mid = draw_base_regions()
             nw_xpos = mid + (pix_to_nm) * nside[j]
             pw_xpos = mid + (pix_to_nm) * pside[j]
-            nw_color = (237, 90, 69)
-            pw_color = (231, 149, 75)
+
             pygame.draw.rect(screen, nw_color, pygame.Rect(nw_xpos, yn_start, mid - nw_xpos, junc_height))
             pygame.draw.rect(screen, pw_color, pygame.Rect(mid, yn_start, pw_xpos - mid, junc_height))
 
