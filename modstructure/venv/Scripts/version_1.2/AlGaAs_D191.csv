@@ -1,0 +1,7 @@
+Layer,Al%,Type,Concentration (cm-3),Depth (um),Transition%,TransitionCon,I concentration(cm-3)
+1,5,N,1.00E+19,0.05,No,No,3836848
+2,30,N,1.00E+17,0.1,Yes,No,2100
+3,30,N,1.00E+17,0.45,No,No,2100
+4,30,P,5.00E+16,0.78,No,No,2100
+5,30,P,5.00E+16,0.08,Yes,Yes,2100
+6,5,P,1.00E+19,0.05,No,No,3836848
