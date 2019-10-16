@@ -1,12 +1,12 @@
 import tkinter
-import sys
-import numpy as np
 from matplotlib.backends.backend_tkagg import (
     FigureCanvasTkAgg, NavigationToolbar2Tk)
 from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
-import mod_funcs_12
 import mod_materials_12
+import calc_dep_widths
+import sketch
+import mod_gui_class
 
 class GUIFunctions:
 
@@ -36,6 +36,8 @@ class GUIFunctions:
         source_item_label = tkinter.Label(self.comp, textvariable=source_label_text)
         source_item_label.grid(row=3, column=0, padx=10, pady=2)
 
+        #value = 0
+        #adj_before = False
         def make_selection(event):
             index = list_box.curselection()[0]
             selected_text = list_box.get(index)  # get string name of current selected item in listbox
@@ -48,7 +50,7 @@ class GUIFunctions:
             end = pnj.stop - 0.5
             adjust_bias_scale = tkinter.Scale(self.comp, from_=0, to=end, orient=tkinter.VERTICAL,
                                               tickinterval=2, length=200,
-                                             command=lambda value, start_val=0: adjust_bias(value, start_val))
+                                             command=adjust_bias)
             adjust_bias_scale.grid(row=5, column=0, padx=7, pady=5)
             # make binds
             sweep_button.bind('<ButtonRelease-1>', sweep_bias)
@@ -56,12 +58,18 @@ class GUIFunctions:
         def sweep_bias(event):
             index = list_box.curselection()[0]
             selected_text = list_box.get(index)
-            [rev_bias, dep_widths] = mod_funcs_12.run_main(selected_text, "sweep",0,0)
+            pnd = mod_materials_12.make_pnd(selected_text)
+            [rev_bias, layer_array, widths, first_indexes, n_indexes, p_indexes, sides] = calc_dep_widths.run(pnd)
+            sketch.run(rev_bias, layer_array, widths, first_indexes, n_indexes, p_indexes, sides, False, 0)
+            mod_gui_class.graph(selected_text,rev_bias, widths[0:,2])
 
-        def adjust_bias(value, start_val):
+        def adjust_bias(value):
             index = list_box.curselection()[0]
             selected_text = list_box.get(index)
-            print(value)
+            pnd = mod_materials_12.make_pnd(selected_text)
+            [rev_bias, layer_array, widths, first_indexes, n_indexes, p_indexes, sides] = calc_dep_widths.run(pnd)
+            sketch.run(rev_bias, layer_array, widths, first_indexes, n_indexes, p_indexes, sides, True, value)
+            mod_gui_class.graph(selected_text, rev_bias, widths[0:, 2])
 
         list_box.bind('<ButtonRelease-1>', make_selection)
 

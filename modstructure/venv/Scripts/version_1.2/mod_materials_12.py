@@ -3,8 +3,8 @@ import pandas
 
 # data list array
 materials = [["AlGaAs (30%Al 70%Ga)", 12.048, 40.5, "D19.1 Wafer", "AlGaAs_D191.csv"],
-             ["4H-SiC (UVA)", 9.7, 144, "High Detection \n Sensitivity of \n Ultraviolet \n 4H-SiC APDs \n- UVA", "4HSiC_UVA.csv"],
-             ["4H-SiC (China)", 9.7, 144, "4H-SiC APD \n Linear Array", "4HSiC_China.csv"]]
+             ["4H-SiC (UVA)", 9.7, 144.5, "High Detection \n Sensitivity of \n Ultraviolet \n 4H-SiC APDs \n- UVA", "4HSiC_UVA.csv"],
+             ["4H-SiC (China)", 9.7, 144.5, "4H-SiC APD \n Linear Array", "4HSiC_China.csv"]]
 
 class Material(object):
 

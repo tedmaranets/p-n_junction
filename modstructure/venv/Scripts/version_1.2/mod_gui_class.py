@@ -1,12 +1,13 @@
 import tkinter
 from tkinter import ttk
-from tkinter import messagebox
 import pygame
 import os
 import sys
-import mod_materials_12
-import test_gui_funcs
-
+import mod_gui_funcs
+from matplotlib.backends.backend_tkagg import (
+    FigureCanvasTkAgg, NavigationToolbar2Tk)
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.figure import Figure
 
 class GUIMaster(tkinter.Tk):
 
@@ -23,7 +24,7 @@ class LeftPanel(tkinter.Frame):
     def __init__(self, master):
         tkinter.Frame.__init__(self, master)
         self.grid(row=0, column=0)
-        test_gui_funcs.GUIFunctions(self).make_left_panel()
+        mod_gui_funcs.GUIFunctions(self).make_left_panel()
 
 
 class RightPanel(ttk.Notebook):
@@ -40,10 +41,12 @@ class RightPanel(ttk.Notebook):
         os.environ['SDL_VIDEODRIVER'] = 'windib'
         pygame.display.init()
         screen = pygame.display.set_mode((500, 500))
-        # 2nd tab is graph tab
-        graph_tab = ttk.Frame(self)
-        self.add(graph_tab, text='Graph')
 
+class GraphTab(ttk.Frame):
+
+    def __init__(self, notebook):
+        ttk.Frame.__init__(self, notebook)
+        notebook.add(self, text='Graph')
 
 class MainFrame(tkinter.Frame):
 
@@ -58,6 +61,29 @@ mainframe = MainFrame(master)
 mainframe.pack(side="top", fill="both", expand=True)
 left_panel = LeftPanel(mainframe)
 right_panel = RightPanel(mainframe)
+graph_tab = GraphTab(right_panel)
+
+def graph(name, rev_bias, dep_widths):
+    graph_list = graph_tab.winfo_children()
+    for itm in graph_list:
+        if itm.winfo_children():
+            list.extend(itm.winfo_children())
+    for itm in graph_list:
+        itm.pack_forget()  # removes previous graph/stuff in the graph tab for a new graph
+        # doing this because ax.clf() or ax.cla() wasn't working - Teddy 10/8/2019
+
+    fig = Figure(figsize=(5, 4), dpi=85)  # create graph figure to put into graph_tab
+    ax = fig.add_subplot()
+    ax.plot(rev_bias, dep_widths / 1000)
+
+    canvas = FigureCanvasTkAgg(fig, master=graph_tab)  # A tk.DrawingArea.
+    canvas.draw()
+    canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
+    title = name + "\nDepletion width vs. Reverse bias "
+    ax.set_title(title, fontsize=12)
+    ax.set_xlabel('bias (V)', fontsize=12)
+    ax.set_ylabel('width (um)', fontsize=12)
 
 def on_closing():
     master.destroy()
