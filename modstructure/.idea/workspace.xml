@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="64aa8abb-a189-4ec4-a656-c33766cf07ac" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/version_1.2/mod_funcs_12.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/version_1.2/mod_funcs_12.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +38,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.mod_gui_tkinter_12">
+  <component name="RunManager" selected="Python.test_gui_class">
     <configuration name="mod_gui_tkinter_10" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="modstructure" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -101,7 +102,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="mod_materials_11" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="test_gui_class" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="modstructure" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -109,11 +110,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv/Scripts/version_1.1" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv/Scripts/version_1.2" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/Scripts/version_1.1/mod_materials_11.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/Scripts/version_1.2/test_gui_class.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -145,11 +146,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test_gui_class" />
         <item itemvalue="Python.mod_gui_tkinter_12" />
         <item itemvalue="Python.mod_gui_tkinter_11" />
         <item itemvalue="Python.mod_gui_tkinter_10" />
         <item itemvalue="Python.test_sketch" />
-        <item itemvalue="Python.mod_materials_11" />
       </list>
     </recent_temporary>
   </component>

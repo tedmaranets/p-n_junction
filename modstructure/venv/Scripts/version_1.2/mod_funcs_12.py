@@ -6,6 +6,7 @@ import sys
 import tkinter
 from tkinter import ttk
 import mod_materials_12
+import test_gui_funcs
 import ast
 
 class Functions:
@@ -102,7 +103,7 @@ class Functions:
 
         return revbias, layer_array, widths, first_n_index, first_p_index, n_indexes, p_indexes, nside, pside
 
-    def skt_all(pnd, choice, value, initial_val):
+    def skt_all(pnd, choice, value, start_val):
         # get calcs
         [revbias, layer_array, widths, first_n_index, first_p_index, n_indexes, p_indexes, nside, pside] = Functions.calc_dep_widths(pnd)
         # initialize
@@ -111,6 +112,7 @@ class Functions:
         font = pygame.font.SysFont('arialms', 12)
         done = False
         clock = pygame.time.Clock()
+        init_val = int(start_val)
         xn_start = 50
         yn_start = 150
         xn = 0
@@ -228,27 +230,25 @@ class Functions:
 
                     j += 1
                 else:
-                    newinitial_val = 0
+
                     done = True
 
             elif choice == "adjust":
                 full_dep = widths[0:, 2]
                 newbias = int(value)
-                if newbias != initial_val:
+                if newbias != init_val:
                     j = newbias
                     print(j)
                     print(full_dep[j])
-                    newinitial_val = newbias
-                else:
-                    done = True
-
+                    init_val = newbias
+                    test_gui_funcs.GUIFunctions.make_left_panel().adjust_bias(value, init_val)
             else:
                 done = True
 
             pygame.display.flip()  # update
             clock.tick(60)  # refresh every 1/60 sec
 
-        return newinitial_val
+        return 1
 
 
 
@@ -260,11 +260,11 @@ class Functions:
 
 
 
-def run_main(name, choice, value, initial_val):
+def run_main(name, choice, value, start_val):
     # start
     pnd = mod_materials_12.make_pnd(name)
-    [revbias, layer_array, widths, first_n_index, first_p_index, n_indexes, p_indexes, nside, pside] = Functions.calc_dep_widths(pnd)
-    newinit_val = Functions.skt_all(pnd, choice, value, initial_val)
+    [rev_bias, layer_array, widths, first_n_index, first_p_index, n_indexes, p_indexes, nside, pside] = Functions.calc_dep_widths(pnd)
+    Functions.skt_all(pnd, choice, value, start_val)
 
-    return revbias, widths[0:,2], newinit_val
+    return rev_bias, widths[0:,2]
 
