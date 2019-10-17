@@ -1,7 +1,10 @@
 # model_structures
 
-working project to visually model pn diodes and eventually transistors based on their material properties
+working project to visually model a pn junction under a varying reverse bias. Animations of junction behavior are based on empirical calculations (Not hard-coded).
 
-- `mod_gui_tkinter.py` is the starter code the initializes the gui and program
-- `mod_funcs.py` contains the general program functions aside from gui stuff
-- `mod_materials.py` contains the necessary data for the materials 
+As of Version 1.2
+- `mod_gui_class.py` contains OO code that initializes different parts of the main gui window (Tkinter).
+- `mod_gui_funcs.py` contains the functions that add content/functionality to the left-panel of the gui. Executing this script starts the whole program.
+- `mod_materials_12.py` contains the functions related to the material data.
+- `calc_dep_widths.py` is a function that calculates depletion region behavior from empirical formulas, using material property data.
+- `sktech.py` is a function that animates the calculated depletion region behavior in PyGame.
