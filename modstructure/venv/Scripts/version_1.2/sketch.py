@@ -63,6 +63,9 @@ def run(rev_bias, layer_array, widths, first_indexes, n_indexes, p_indexes, side
             xn = xn_start
             nplus = font.render("n+", True, (255, 255, 255))
             nminus = font.render("n-", True, (255, 255, 255))
+            # adjust rectangle color based on dopant concentration
+            # draw rectangles
+            # draw n layers
             while k != first_indexes[0] + 1:
                 currcon = ast.literal_eval(layer_array[k, 3])
                 n_color = n_high_color
@@ -80,6 +83,7 @@ def run(rev_bias, layer_array, widths, first_indexes, n_indexes, p_indexes, side
             xp = xn
             pplus = font.render("p+", True, (255, 255, 255))
             pminus = font.render("p-", True, (255, 255, 255))
+            # draw p layers
             while k != first_indexes[1] + len(p_indexes):
                 currcon = ast.literal_eval(layer_array[k, 3])
                 p_color = p_high_color
@@ -97,44 +101,15 @@ def run(rev_bias, layer_array, widths, first_indexes, n_indexes, p_indexes, side
 
             return mid
 
-        full_dep = widths[0:, 2]
-
-        if a is False: # no discrete adjustment, sweep loop
-            if j != len(full_dep):
-                screen.fill((0, 0, 0))
-                nw_color = (237, 90, 69)
-                pw_color = (231, 149, 75)
-
-                info = "Full width: " + str(round(full_dep[j] / 1000, 2)) + " um | Reverse Bias -" + str(
-                    rev_bias[j]) + " V"
-                info_text = font.render(info, True, (255, 255, 255))
-                screen.blit(info_text, (xp + 70, yn_start + junc_height + 20))
-                legend_red = font.render("red", True, nw_color)
-                legend_plus = font.render("=  +", True, (255, 255, 255))
-                screen.blit(legend_red, (xn + junc_width / 2 + 120, yn_start + junc_height + 20))
-                screen.blit(legend_plus, (xn + junc_width / 2 + 140, yn_start + junc_height + 20))
-                legend_blue = font.render("orange", True, pw_color)
-                legend_minus = font.render("=  -", True, (255, 255, 255))
-                screen.blit(legend_blue, (xn + junc_width / 2 + 120, yn_start + junc_height + 45))
-                screen.blit(legend_minus, (xn + junc_width / 2 + 160, yn_start + junc_height + 45))
-
-                mid = draw_base_regions()
-                nw_xpos = mid + pix_to_nm * sides[j, 0]
-                pw_xpos = mid + pix_to_nm * sides[j, 1]
-                pygame.draw.rect(screen, nw_color, pygame.Rect(nw_xpos, yn_start, mid - nw_xpos, junc_height))
-                pygame.draw.rect(screen, pw_color, pygame.Rect(mid, yn_start, pw_xpos - mid, junc_height))
-
-                j += 1
-            else:
-                done = True
-        else:
-            j = int(value)*2
+        def sketch_all(value, full_dep):
+            v = value
             screen.fill((0, 0, 0))
             nw_color = (237, 90, 69)
             pw_color = (231, 149, 75)
 
-            info = "Full width: " + str(round(full_dep[j] / 1000, 2)) + " um | Reverse Bias -" + str(
-                rev_bias[j]) + " V"
+            # draw legends and misc
+            info = "Full width: " + str(round(full_dep[v] / 1000, 2)) + " um | Reverse Bias -" + str(
+                rev_bias[v]) + " V"
             info_text = font.render(info, True, (255, 255, 255))
             screen.blit(info_text, (xp + 70, yn_start + junc_height + 20))
             legend_red = font.render("red", True, nw_color)
@@ -145,12 +120,32 @@ def run(rev_bias, layer_array, widths, first_indexes, n_indexes, p_indexes, side
             legend_minus = font.render("=  -", True, (255, 255, 255))
             screen.blit(legend_blue, (xn + junc_width / 2 + 120, yn_start + junc_height + 45))
             screen.blit(legend_minus, (xn + junc_width / 2 + 160, yn_start + junc_height + 45))
+            scale_xstart = xp + 70
+            scale_xend = scale_xstart + (pix_to_nm * 500)
+            scale_y = yn_start + junc_height + 55
+            pygame.draw.line(screen,(255,255,255),(scale_xstart, scale_y), (scale_xend, scale_y))
+            scale_text = font.render("= 500 nm",True, (255,255,255))
+            screen.blit(scale_text, (scale_xend + 13, scale_y - 8))
 
+            # draw depletion rectangles
             mid = draw_base_regions()
-            nw_xpos = mid + pix_to_nm * sides[j, 0]
-            pw_xpos = mid + pix_to_nm * sides[j, 1]
+            nw_xpos = mid + pix_to_nm * sides[v, 0]
+            pw_xpos = mid + pix_to_nm * sides[v, 1]
             pygame.draw.rect(screen, nw_color, pygame.Rect(nw_xpos, yn_start, mid - nw_xpos, junc_height))
             pygame.draw.rect(screen, pw_color, pygame.Rect(mid, yn_start, pw_xpos - mid, junc_height))
+            return v
+
+        full_dep = widths[0:, 2] # total depletion widths
+
+        if a is False: # no discrete adjustment, sweep loop
+            if j != len(full_dep): # this is actually a loop
+                v = sketch_all(j,full_dep)
+                j += 1
+            else:
+                done = True
+        else: # adjustment. runs once
+            j = int(value)*2
+            v = sketch_all(j,full_dep)
             done = True
 
         pygame.display.flip()  # update

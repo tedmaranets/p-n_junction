@@ -1,8 +1,4 @@
 import tkinter
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
-from matplotlib.backend_bases import key_press_handler
-from matplotlib.figure import Figure
 import mod_materials_12
 import calc_dep_widths
 import sketch
